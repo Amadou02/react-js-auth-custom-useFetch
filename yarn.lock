@@ -4450,6 +4450,11 @@ graceful-fs@^4.1.2, graceful-fs@^4.1.6, graceful-fs@^4.2.0, graceful-fs@^4.2.4, 
   resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.2.9.tgz#041b05df45755e587a24942279b9d113146e1c96"
   integrity sha512-NtNxqUcXgpW2iMrfqSfR73Glt39K+BLwWsPs94yR63v45T0Wbej7eRmL5cWfwEgqXnmjQp3zaJTshdRW/qC2ZQ==
 
+green-jwt@0.0.8-alpha:
+  version "0.0.8-alpha"
+  resolved "https://registry.yarnpkg.com/green-jwt/-/green-jwt-0.0.8-alpha.tgz#b24d9922f8af61c4823d3e357da25632fa8009a3"
+  integrity sha1-sk2ZIvivYcSCPT41faJWMvqACaM=
+
 gzip-size@^6.0.0:
   version "6.0.0"
   resolved "https://registry.yarnpkg.com/gzip-size/-/gzip-size-6.0.0.tgz#065367fd50c239c0671cbcbad5be3e2eeb10e462"
@@ -5577,6 +5582,13 @@ jsonpointer@^5.0.0:
   dependencies:
     array-includes "^3.1.4"
     object.assign "^4.1.2"
+
+jwt-decoder@^0.0.0:
+  version "0.0.0"
+  resolved "https://registry.yarnpkg.com/jwt-decoder/-/jwt-decoder-0.0.0.tgz#aa4fc48aec0a7560e1f7a9050dfd68e6980b79be"
+  integrity sha1-qk/EiuwKdWDh96kFDf1o5pgLeb4=
+  dependencies:
+    green-jwt "0.0.8-alpha"
 
 kind-of@^6.0.2:
   version "6.0.3"
