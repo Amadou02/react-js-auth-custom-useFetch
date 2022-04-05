@@ -3,15 +3,18 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import * as yup from 'yup';
+import { useContext } from 'react';
+import AuthContext from '../context/AuthContext';
 
 const schema = yup.object({
-  login: yup
+  identifier: yup
     .string()
     .required('le login est requis')
     .email('le doit être un email valide'),
   password: yup.string().required().min(6),
 });
 const Login = () => {
+  const { onLogin } = useContext(AuthContext);
   const {
     register,
     handleSubmit,
@@ -20,7 +23,7 @@ const Login = () => {
     resolver: yupResolver(schema),
   });
   const onSubmit = (data) => {
-    console.log(data);
+    onLogin(data);
   };
 
   return (
@@ -30,14 +33,16 @@ const Login = () => {
         <form onSubmit={handleSubmit(onSubmit)}>
           <div>
             <div className="mb-3">
-              <label className="form-label" htmlFor="login">
+              <label className="form-label" htmlFor="email">
                 Login
               </label>
               <input
-                className={`form-control ${errors.login ? 'is-invalid' : ''}`}
-                {...register('login')}
-                id="login"
-                type="text"
+                className={`form-control ${
+                  errors.identifier ? 'is-invalid' : ''
+                }`}
+                {...register('identifier')}
+                id="identifier"
+                type="email"
               />
               <div className="invalid-feedback">{errors.login?.message}</div>
             </div>
@@ -46,7 +51,9 @@ const Login = () => {
                 Mot de passe
               </label>
               <input
-                className={`form-control ${errors.password ? 'is-invalid' : ''}`}
+                className={`form-control ${
+                  errors.password ? 'is-invalid' : ''
+                }`}
                 {...register('password')}
                 id="password"
                 type="password"

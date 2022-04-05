@@ -1,11 +1,21 @@
-import { useContext } from 'react';
+import { useState } from 'react';
+import { login } from '../api/userApi';
 import AuthContext from '../context/AuthContext';
 
 const AuthProvider = ({ children }) => {
-  const authContext = useContext(AuthContext);
+  // le token du storage ou null le cas échéant
+  const [token, setToken] = useState(localStorage.getItem('token') || null);
 
-  const handleLogin = (data) => {
-    console.log(data);
+  const handleLogin = async (credentials) => {
+    login(credentials)
+      .then((data) => {
+        const { jwt } = data;
+        localStorage.setItem('token', jwt);
+        setToken(token);
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
   };
 
   const handleLogout = () => {
@@ -13,10 +23,12 @@ const AuthProvider = ({ children }) => {
   };
 
   const value = {
-    token,
+    token: token,
     onLogin: handleLogin,
     onLogout: handleLogout,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
+
+export default AuthProvider;
