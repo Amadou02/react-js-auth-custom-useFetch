@@ -1,33 +1,43 @@
-import { useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useCallback, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { login } from '../api/userApi';
 import AuthContext from '../context/AuthContext';
 
 const AuthProvider = ({ children }) => {
   // le token du storage ou null le cas échéant
-  const [token, setToken] = useState(localStorage.getItem('token') || null);
+  // const [authTokens, setAuthTokens] = useState(
+  //   localStorage.getItem('authTokens')
+  //     ? JSON.parse(localStorage.getItem('authToken'))
+  //     : null
+  // );
 
   // dernière page visitée
+  const navigate = useNavigate();
   const location = useLocation();
 
   const handleLogin = async (credentials) => {
-    login(credentials)
-      .then((data) => {
-        const { jwt } = data;
-        localStorage.setItem('token', jwt);
-        setToken(token);
-      })
-      .catch((error) => {
-        console.log(error.message);
-      });
+    try {
+      const data = await login(credentials);
+
+      // stockage en localstorage
+      localStorage.setItem('authTokens', JSON.stringify(data));
+      // On récupère la page ciblée avant rédirection si elle existe
+      const to = location.state?.from?.pathname || '/dashboard';
+      // On le rédirige
+      navigate(to);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  const handleLogout = () => {
+  const handleLogout = useCallback(() => {
+    // stockage en localstorage
+    localStorage.clear();
+    navigate('/login');
     console.log('you are logged out');
-  };
+  }, []);
 
   const value = {
-    token: token,
     onLogin: handleLogin,
     onLogout: handleLogout,
   };

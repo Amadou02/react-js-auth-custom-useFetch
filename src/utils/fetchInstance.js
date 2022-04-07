@@ -25,7 +25,9 @@ let originalRequest = async (url, config) => {
 
 let fetchInstance = async (url, config = {}) => {
   // On récupère le token s'il existe
-  let authTokens = localStorage.getItem('authTokens') || null;
+  let authTokens = localStorage.getItem('authTokens')
+    ? JSON.parse(localStorage.getItem('authTokens'))
+    : null;
   // On récupère les infos de l'utilisateur du token
   const user = jwt_decode(authTokens.access_token);
 

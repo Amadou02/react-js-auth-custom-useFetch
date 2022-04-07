@@ -1,9 +1,6 @@
-@use '~bootstrap/scss/bootstrap.scss';
-
-$primary:  'red';
+@import '~bootstrap/scss/bootstrap.scss';
 
 body {
-    margin: 0;
-    background-color: rgb(107, 207, 216);
-  }
-  
+  margin: 0;
+  background-color: $blue-100;
+}

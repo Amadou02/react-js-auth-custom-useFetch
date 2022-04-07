@@ -7,7 +7,7 @@ import { useContext } from 'react';
 import AuthContext from '../context/AuthContext';
 
 const schema = yup.object({
-  identifier: yup
+  username: yup
     .string()
     .required('le login est requis')
     .email('le doit être un email valide'),
@@ -38,10 +38,10 @@ const Login = () => {
               </label>
               <input
                 className={`form-control ${
-                  errors.identifier ? 'is-invalid' : ''
+                  errors.username ? 'is-invalid' : ''
                 }`}
-                {...register('identifier')}
-                id="identifier"
+                {...register('username')}
+                id="username"
                 type="email"
               />
               <div className="invalid-feedback">{errors.login?.message}</div>
